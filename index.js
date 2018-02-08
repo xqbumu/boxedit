@@ -67,8 +67,8 @@ var Root = React.createClass({
   handleSplit: function(numWays) {
     this.setState({
       boxData: splitLine(this.state.boxData,
-                         this.state.selectedBoxIndex,
-                         numWays)
+                        this.state.selectedBoxIndex,
+                        numWays)
     });
   },
   render: function() {
@@ -83,11 +83,11 @@ var Root = React.createClass({
                   onChangeSelection={this.handleChangeSelection}
                   {...this.state} />
         <ImageView onChangeSelection={this.handleChangeSelection}
-                   onChangeLetter={this.handleChangeLetter}
-                   onSplit={this.handleSplit}
-                   onChangeImage={this.handleImage}
-                   onChangeBox={this.handleBox}
-                   {...this.state} />
+                  onChangeLetter={this.handleChangeLetter}
+                  onSplit={this.handleSplit}
+                  onChangeImage={this.handleImage}
+                  onChangeBox={this.handleBox}
+                  {...this.state} />
       </div>
     );
   }
@@ -210,7 +210,7 @@ var ImageView = React.createClass({
   },
   transform: function(boxesImageCoords) {
     var height = this.props.imageHeight ||
-                 Math.max.apply(null, boxesImageCoords.map(c => c.top));
+                Math.max.apply(null, boxesImageCoords.map(c => c.top));
     return boxesImageCoords.map(box => ({
       letter: box.letter,
       left: box.left,
@@ -310,11 +310,11 @@ var ImageView = React.createClass({
     var showHelp = !(this.props.boxData || this.props.imageHeight > 1);
     return (
       <div className={classes}
-           onDragEnd={this.handleDragEng}
-           onDragOver={this.handleDragOver}
-           onDragLeave={this.handleDragLeave}
-           onDragEnter={this.handleDragEnter}
-           onDrop={this.handleDrop}>
+          onDragEnd={this.handleDragEng}
+          onDragOver={this.handleDragOver}
+          onDragLeave={this.handleDragLeave}
+          onDragEnter={this.handleDragEnter}
+          onDrop={this.handleDrop}>
         <img src={this.props.imageDataUri} />
         {boxes}
         {showHelp ? <Help /> : null}
@@ -342,9 +342,9 @@ var Box = React.createClass({
     var letter = this.props.lettersVisible ? this.props.letter : '';
     return (
       <div style={style}
-           className={classes}
-           onClick={this.handleClick}
-           onKeyPress={this.handleKey}>
+          className={classes}
+          onClick={this.handleClick}
+          onKeyPress={this.handleKey}>
         {letter}
       </div>
     );
