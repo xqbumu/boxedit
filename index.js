@@ -34,6 +34,7 @@ var Root = React.createClass({
       imageDataUri: this.props.initialImageUri || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
       imageHeight: this.props.initialImageHeight || null,
       lettersVisible: true,
+      actionType: true,
       selectedBox: null
     }
   },
@@ -54,6 +55,9 @@ var Root = React.createClass({
   },
   handleLettersVisibleChanged: function(visible) {
     this.setState({lettersVisible: visible});
+  },
+  handleActionTypeChanged: function(result) {
+    this.setState({actionType: result});
   },
   handleChangeSelection: function(selectedBoxIndex) {
     this.setState({selectedBoxIndex});
@@ -78,7 +82,8 @@ var Root = React.createClass({
                     onSplit={this.handleSplit}
                     onChangeImage={this.handleImage}
                     onChangeBox={this.handleBox}
-                    onChangeLettersVisible={this.handleLettersVisibleChanged} />
+                    onChangeLettersVisible={this.handleLettersVisibleChanged}
+                    onChangeActionType={this.handleActionTypeChanged} />
         <TextView onChangeBox={this.handleBox}
                   onChangeSelection={this.handleChangeSelection}
                   {...this.state} />
@@ -114,6 +119,9 @@ var FileUpload = React.createClass({
   handleLettersVisibleChanged: function() {
     this.props.onChangeLettersVisible(this.refs.check.getDOMNode().checked);
   },
+  handleActionTypeChanged: function() {
+    this.props.onChangeActionType(this.refs.actionType.getDOMNode().checked);
+  },
   handleSplit: function(e) {
     this.props.onSplit(Number(e.target.value));
   },
@@ -135,6 +143,8 @@ var FileUpload = React.createClass({
         Drag a .box file here: <DropZone onDrop={this.handleNewBox} />
         And an image file here: <DropZone onDrop={this.handleNewImage} />
         <input ref="check" type="checkbox" checked={this.props.lettersVisible} onChange={this.handleLettersVisibleChanged} id="letters-visible" /><label htmlFor="letters-visible">
+          Show letters</label>
+        <input ref="actionType" type="checkbox" checked={this.props.actionType} onChange={this.handleActionTypeChanged} id="action-type" /><label htmlFor="action-type">
           Show letters</label>
         {splitter}
       </div>
