@@ -29,6 +29,68 @@ function changeLetter(text, lineNumber, newLetter) {
   return lines.join('\n');
 }
 
+function changeItem(text, lineNumber, action, value) {
+  console.log(action, value);
+  var lines = text.split('\n');
+  if (!lines[lineNumber]) {
+    throw 'No line ' + lineNumber + ' in text';
+  }
+  var lineParts = lines[lineNumber].split(' ');
+  // lineParts[0] = newLetter;
+  if (action) {
+    switch (value) {
+      case 'd':
+        lineParts[1]++;
+        lineParts[3]++;
+        break;
+      case 'a':
+        lineParts[1]--;
+        lineParts[3]--;
+        break;
+      case 'w':
+        lineParts[2]++;
+        lineParts[4]++;
+        break;
+      case 's':
+        lineParts[2]--;
+        lineParts[4]--;
+        break;
+
+      case 'y':
+        lineParts[1]--;
+        break;
+      case 'h':
+        lineParts[1]++;
+        break;
+
+      case 'u':
+        lineParts[2]--;
+        break;
+      case 'j':
+        lineParts[2]++;
+        break;
+
+      case 'o':
+        lineParts[3]++;
+        break;
+      case 'l':
+        lineParts[3]--;
+        break;
+
+      case 'i':
+        lineParts[4]++;
+        break;
+      case 'k':
+        lineParts[4]--;
+        break;
+      default:
+        break;
+    }
+  }
+  lines[lineNumber] = lineParts.join(' ');
+  return lines.join('\n');
+}
+
 function parseBoxLine(line) {
   var parts = line.split(' ');
   return {
@@ -52,7 +114,7 @@ function splitLine(text, lineNumber, numWays) {
   }
 
   var box = parseBoxLine(lines[lineNumber]);
-  var x = function(idx) {  // idx is in 0..numWays
+  var x = function (idx) { // idx is in 0..numWays
     return Math.round(box.left + (box.right - box.left) * idx / numWays);
   };
 
@@ -67,12 +129,12 @@ function splitLine(text, lineNumber, numWays) {
     rest: box.rest
   }));
   var newLines = newBoxes.map(serializeBoxLine),
-      spliceArgs = [lineNumber, 1].concat(newLines);
+    spliceArgs = [lineNumber, 1].concat(newLines);
   [].splice.apply(lines, spliceArgs);
   return lines.join('\n');
 }
 
-if (typeof(module) !== 'undefined') {
+if (typeof (module) !== 'undefined') {
   module.exports = {
     countLines,
     startOfLinePosition,

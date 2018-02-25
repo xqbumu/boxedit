@@ -68,6 +68,12 @@ var Root = React.createClass({
       selectedBoxIndex: lineIndex + 1
     });
   },
+  handleChangeItem: function(lineIndex, value) {
+    this.setState({
+      boxData: changeItem(this.state.boxData, lineIndex, this.state.actionType, value),
+      selectedBoxIndex: lineIndex
+    });
+  },
   handleSplit: function(numWays) {
     this.setState({
       boxData: splitLine(this.state.boxData,
@@ -89,6 +95,7 @@ var Root = React.createClass({
                   {...this.state} />
         <ImageView onChangeSelection={this.handleChangeSelection}
                   onChangeLetter={this.handleChangeLetter}
+                  onChangeItem={this.handleChangeItem}
                   onSplit={this.handleSplit}
                   onChangeImage={this.handleImage}
                   onChangeBox={this.handleBox}
@@ -242,9 +249,15 @@ var ImageView = React.createClass({
 
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     // TODO: use a blacklist instead of a whitelist?
-    if (/^[-0-9a-zA-Z()\[\]{}!@#$%^&*=~?.,:;'"\/\\]$/.exec(c)) {
+
+    if (this.props.actionType) {
       e.preventDefault();
-      this.props.onChangeLetter(this.props.selectedBoxIndex, c);
+      this.props.onChangeItem(this.props.selectedBoxIndex, c);
+    } else {
+      if (/^[-0-9a-zA-Z()\[\]{}!@#$%^&*=~?.,:;'"\/\\]$/.exec(c)) {
+        e.preventDefault();
+        this.props.onChangeLetter(this.props.selectedBoxIndex, c);
+      }
     }
   },
   componentDidUpdate: function() {
